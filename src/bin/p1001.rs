@@ -31,9 +31,7 @@ fn dfs(i: usize, l: usize, r: usize, left: &[usize], right: &[usize]) -> i32 {
     }
     let v = dfs(i + 1, l, r, left, right);
     let mut ans = v;
-    if contains_or_not_overlaps(l, r, left[i], right[i]) {
-
-    }
+    if contains_or_not_overlaps(l, r, left[i], right[i]) {}
     ans + dfs(i + 1, left[i], right[i], left, right)
 }
 
