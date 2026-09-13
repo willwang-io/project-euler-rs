@@ -1,0 +1,19 @@
+name: Formatting
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  fmt:
+    name: cargo fmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install Rust with rustfmt
+        run: rustup toolchain install stable --profile minimal --component rustfmt
+      - name: Check formatting
+        run: rustup run stable cargo fmt --all -- --check
