@@ -268,7 +268,7 @@ fn pollard_rho_inner(n: u64, c: u64) -> u64 {
     while d == 1 {
         x = f(x);
         y = f(f(y));
-        let diff = if x > y { x - y } else { y - x };
+        let diff = x.abs_diff(y);
         d = gcd(diff, n);
     }
     d

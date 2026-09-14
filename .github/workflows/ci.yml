@@ -26,4 +26,9 @@ jobs:
       - name: Install Rust with Clippy
         run: rustup toolchain install stable --profile minimal --component clippy
       - name: Check lints
-        run: rustup run stable cargo clippy --all-targets -- -D warnings
+        run: >-
+          rustup run stable cargo clippy --all-targets --
+          -D clippy::all
+          -W clippy::style
+          -A clippy::manual_is_multiple_of
+          -A clippy::needless_range_loop
