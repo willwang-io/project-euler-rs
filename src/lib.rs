@@ -1,18 +1,11 @@
-use std::process::Command;
+use std::{fs, io, path::Path};
 
 pub mod linear_algebra;
 pub mod number_theory;
 
-pub fn fetch_input(url: &str) -> Result<Vec<usize>, Box<dyn std::error::Error>> {
-    let output = Command::new("curl").args(["-fLaS", url]).output()?;
-
-    let text = String::from_utf8(output.stdout)?;
-
-    let arr = text
-        .trim()
-        .split(",")
-        .map(|x| x.parse::<usize>().unwrap())
-        .collect::<Vec<_>>();
-
-    Ok(arr)
+pub fn fetch_input(filename: &str) -> io::Result<String> {
+    let path = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("input")
+        .join(filename);
+    fs::read_to_string(path)
 }
