@@ -105,7 +105,7 @@ pub fn is_prime(n: u64) -> bool {
 
             let mut x = mod_pow(a, d, n);
             if x == 1 || x == n - 1 {
-                return false;
+                continue 'witness_loop;
             }
 
             for _ in 1..s {
