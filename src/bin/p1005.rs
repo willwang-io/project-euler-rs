@@ -1,14 +1,3 @@
-// Use DP to count the increasing prime lists that sum to N, including the number of valid
-// completion for a given prefix.
-//
-// For instance, `dfs(0, 2026)` counts all the valid lists, while `dfs(1, 2026 - 2)` counts the
-// valid lists whose first prime is 2.
-//
-// We can then examine prefixes in lexicographic order, skip entire groups using these counts, and
-// locate the median list.
-//
-// Sep 13, 2026
-
 use pe_rs::number_theory::sieve_of_eratosthenes;
 
 const N: usize = 2026;
