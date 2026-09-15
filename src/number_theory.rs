@@ -1,5 +1,10 @@
 use std::collections::BTreeMap;
 
+#[inline]
+pub fn factorial(n: u64) -> u64 {
+    (1..=n).product()
+}
+
 pub fn gcd(mut a: u64, mut b: u64) -> u64 {
     while b != 0 {
         let t = b;

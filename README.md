@@ -9,6 +9,16 @@ hyperfine --warmup 10 --runs 100 --shell=none ./target/release/[BIN]
 
 | Problem                                                                       |     Benchmark     |                Notes                |                                    Code                                     |
 |:------------------------------------------------------------------------------|:-----------------:|:-----------------------------------:|:---------------------------------------------------------------------------:|
+| [40. Champernowne's Constant](https://projecteuler.net/problem=40)            |  1.9 ms ± 0.1 ms  |                                     | [p0040.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0040.rs) |
+| [39. Integer Right Triangles](https://projecteuler.net/problem=39)            |  2.0 ms ± 0.2 ms  |                                     | [p0039.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0039.rs) |
+| [38. Pandigital Multiples](https://projecteuler.net/problem=38)               |  3.8 ms ± 0.3 ms  |                                     | [p0038.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0038.rs) |
+| [37. Truncatable Primes](https://projecteuler.net/problem=37)                 |  5.6 ms ± 0.3 ms  |                                     | [p0037.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0037.rs) |
+| [36. Double-base Palindromes](https://projecteuler.net/problem=36)            | 51.3 ms ± 0.7 ms  |                                     | [p0036.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0036.rs) |
+| [35. Circular Primes](https://projecteuler.net/problem=35)                    |  9.2 ms ± 0.3 ms  |                                     | [p0035.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0035.rs) |
+| [34. Digit Factorials](https://projecteuler.net/problem=34)                   |  3.7 ms ± 0.2 ms  |                                     | [p0034.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0034.rs) |
+| [33. Digit Cancelling Fractions](https://projecteuler.net/problem=33)         |  1.9 ms ± 0.1 ms  |                                     | [p0033.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0033.rs) |
+| [32. Pandigital Products](https://projecteuler.net/problem=32)                |  9.6 ms ± 0.3 ms  |                                     | [p0032.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0032.rs) |
+| [31. Coin Sums](https://projecteuler.net/problem=31)                          |  1.9 ms ± 0.2 ms  |                 DP                  | [p0031.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0031.rs) |
 | [30. Digit Fifth Powers](https://projecteuler.net/problem=30)                 | 13.7 ms ± 0.9 ms  |                                     | [p0030.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0030.rs) |
 | [29. Distinct Powers](https://projecteuler.net/problem=29)                    |  5.4 ms ± 0.3 ms  |                                     | [p0029.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0029.rs) |
 | [28. Number Spiral Diagonals](https://projecteuler.net/problem=28)            |  2.0 ms ± 0.2 ms  | [A200975](https://oeis.org/A200975) | [p0028.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0028.rs) |

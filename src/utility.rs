@@ -12,3 +12,7 @@ pub fn next_permutation<T: Ord>(a: &mut [T]) -> bool {
     a[i + 1..].reverse();
     true
 }
+
+pub fn is_palindrome(s: &str) -> bool {
+    s.chars().eq(s.chars().rev())
+}
