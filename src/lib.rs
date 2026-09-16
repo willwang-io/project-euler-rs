@@ -1,5 +1,6 @@
 use std::{fs, io, path::Path};
 
+pub mod big_int;
 pub mod linear_algebra;
 pub mod number_theory;
 pub mod utility;
