@@ -1,14 +1,14 @@
 use pe_rs::big_int::from_digits_le;
-use pe_rs::number_theory::{continued_fraction_period, convergent_reciprocal};
+use pe_rs::number_theory::continued_fractions::{convergent, period};
 
 fn helper(n: i32) -> i128 {
-    let mut tmp = continued_fraction_period(n);
+    let mut tmp = period(n);
     if (tmp.len() - 1) % 2 == 0 {
         tmp.pop();
     } else {
         tmp.extend_from_within(1..tmp.len() - 1);
     }
-    let (a, _) = convergent_reciprocal(0, tmp.len(), &tmp);
+    let (a, _) = convergent(0, tmp.len(), &tmp);
     from_digits_le(&a)
 }
 

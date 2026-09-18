@@ -7,3 +7,4 @@ edition = "2024"
 
 [lints.clippy]
 manual_is_multiple_of = "allow"
+needless_range_loop = "allow"

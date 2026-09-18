@@ -1,4 +1,4 @@
-use pe_rs::number_theory::convergent_reciprocal;
+use pe_rs::number_theory::continued_fractions::convergent;
 
 fn main() {
     let mut arr = vec![2];
@@ -9,7 +9,7 @@ fn main() {
         arr.push(1);
     }
 
-    let (num, _) = convergent_reciprocal(0, 100, &arr);
+    let (num, _) = convergent(0, 100, &arr);
     let ans: i32 = num.into_iter().map(i32::from).sum();
     println!("{ans}");
 }
