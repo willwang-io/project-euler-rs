@@ -1,9 +1,7 @@
 use pe_rs::fetch_input;
 
-// This is also fast enough for p67.
-
 fn main() {
-    let input = fetch_input("0018.txt").unwrap();
+    let input = fetch_input("0067_triangle.txt").unwrap();
     let mut triangle = input
         .split("\n")
         .map(|row| {
