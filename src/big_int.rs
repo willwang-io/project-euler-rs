@@ -37,6 +37,22 @@ pub fn add(num1: &[u8], num2: &[u8]) -> Vec<u8> {
     normalize(ans)
 }
 
+pub fn to_digit_le(mut x: i32) -> Vec<u8> {
+    let mut ans = vec![];
+    while x > 0 {
+        ans.push((x % 10) as u8);
+        x /= 10;
+    }
+    ans
+}
+
+pub fn from_digits_le(digits: &[u8]) -> i128 {
+    digits
+        .iter()
+        .rev()
+        .fold(0, |acc, &digit| acc * 10 + i128::from(digit))
+}
+
 fn normalize(mut d: Vec<u8>) -> Vec<u8> {
     while d.len() > 1 && d.last() == Some(&0) {
         d.pop();

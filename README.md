@@ -9,6 +9,12 @@ hyperfine --warmup 10 --runs 100 --shell=none ./target/release/[BIN]
 
 | Problem                                                                          |     Benchmark      |                Notes                |                                    Code                                     |
 |:---------------------------------------------------------------------------------|:------------------:|:-----------------------------------:|:---------------------------------------------------------------------------:|
+| [66. Diophantine Equation](https://projecteuler.net/problem=66)                  |  4.0 ms ± 0.3 ms   |           Pell's equation           | [p0066.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0066.rs) |
+| [65. Convergents of $e$](https://projecteuler.net/problem=65)                    |  1.9 ms ± 0.2 ms   |                                     | [p0065.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0065.rs) |
+| [64. Odd Period Square Roots](https://projecteuler.net/problem=64)               |  12.8 ms ± 0.4 ms  |                                     | [p0064.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0064.rs) |
+| [63. Powerful Digit Counts](https://projecteuler.net/problem=63)                 |  2.0 ms ± 0.2 ms   |                                     | [p0063.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0063.rs) |
+| [62. Cubic Permutations](https://projecteuler.net/problem=62)                    |  3.0 ms ± 0.2 ms   |                                     | [p0062.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0062.rs) |
+| [61. Cyclical Figurate Numbers](https://projecteuler.net/problem=61)             |  2.4 ms ± 0.2 ms   |                                     | [p0061.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0061.rs) |
 | [60. Prime Pair Sets](https://projecteuler.net/problem=60)                       | 479.1 ms ± 10.1 ms |               clique                | [p0060.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0060.rs) |
 | [59. XOR Decryption](https://projecteuler.net/problem=59)                        |  43.6 ms ± 0.6 ms  |                                     | [p0059.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0059.rs) |
 | [58. Spiral Primes](https://projecteuler.net/problem=58)                         |  15.9 ms ± 0.4 ms  |                                     | [p0058.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0058.rs) |
