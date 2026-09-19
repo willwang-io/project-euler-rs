@@ -37,7 +37,7 @@ pub fn add(num1: &[u8], num2: &[u8]) -> Vec<u8> {
     normalize(ans)
 }
 
-pub fn to_digit_le(mut x: i32) -> Vec<u8> {
+pub fn to_digit_le(mut x: usize) -> Vec<u8> {
     let mut ans = vec![];
     while x > 0 {
         ans.push((x % 10) as u8);

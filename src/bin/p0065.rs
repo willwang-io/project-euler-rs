@@ -1,7 +1,7 @@
-use pe_rs::number_theory::continued_fractions::convergent;
+use pe_rs::number_theory::continued_fractions::PeriodicCF;
 
 fn main() {
-    let mut arr = vec![2];
+    let mut arr = vec![];
 
     for i in 1..34 {
         arr.push(1);
@@ -9,7 +9,12 @@ fn main() {
         arr.push(1);
     }
 
-    let (num, _) = convergent(0, 100, &arr);
+    let e_cf = PeriodicCF {
+        integer_part: 2,
+        period: arr,
+    };
+
+    let (num, _) = e_cf.convergent(99);
     let ans: i32 = num.into_iter().map(i32::from).sum();
     println!("{ans}");
 }
