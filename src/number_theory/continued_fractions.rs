@@ -1,4 +1,4 @@
-use crate::big_int::{add, mul, to_digit_le};
+use crate::big_int::BigInt;
 use std::collections::HashSet;
 use std::fmt;
 
@@ -33,24 +33,24 @@ impl PeriodicCF {
     }
 
     /// Return the zero-based `idx`th convergent as (numerator, denominator)
-    pub fn convergent(&self, idx: usize) -> (Vec<u8>, Vec<u8>) {
+    pub fn convergent(&self, idx: usize) -> (BigInt, BigInt) {
         if idx == 0 || self.period.is_empty() {
-            return (to_digit_le(self.integer_part), vec![1]);
+            return (BigInt::new(self.integer_part), BigInt::new(1));
         }
 
         let last = self.period[(idx - 1) % self.period_len()];
-        let mut num = to_digit_le(last);
-        let mut den = vec![1];
+        let mut num = BigInt::new(last);
+        let mut den = BigInt::new(1);
 
         for i in (0..idx - 1).rev() {
-            let a = to_digit_le(self.period[i % self.period_len()]);
-            let new_num = add(&mul(&a, &num), &den);
+            let a = BigInt::new(self.period[i % self.period_len()]);
+            let new_num = a * &num + &den;
             den = num;
             num = new_num;
         }
 
-        let a = to_digit_le(self.integer_part);
-        let new_num = add(&mul(&a, &num), &den);
+        let a = BigInt::new(self.integer_part);
+        let new_num = a * &num + &den;
         (new_num, num)
     }
 }

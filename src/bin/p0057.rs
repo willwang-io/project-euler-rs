@@ -1,15 +1,15 @@
-use pe_rs::big_int::add;
+use pe_rs::big_int::BigInt;
 
 fn main() {
-    let mut a = vec![1];
-    let mut b = vec![2];
+    let mut a = BigInt::new(1);
+    let mut b = BigInt::new(2);
     let mut ans = 0;
 
     for _ in 1..1000 {
-        let tmp = add(&a, &add(&b, &b));
+        let tmp = a + &b + &b;
         a = b;
         b = tmp;
-        if add(&a, &b).len() > b.len() {
+        if (&a + &b).digit_count() > b.digit_count() {
             ans += 1;
         }
     }

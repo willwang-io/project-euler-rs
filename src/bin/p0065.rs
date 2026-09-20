@@ -15,6 +15,6 @@ fn main() {
     };
 
     let (num, _) = e_cf.convergent(99);
-    let ans: i32 = num.into_iter().map(i32::from).sum();
+    let ans = num.digits_sum();
     println!("{ans}");
 }

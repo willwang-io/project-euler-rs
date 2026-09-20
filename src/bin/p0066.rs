@@ -1,12 +1,11 @@
-use pe_rs::big_int::from_digits_le;
 use pe_rs::number_theory::continued_fractions::period;
 
-fn helper(n: usize) -> i128 {
+fn helper(n: usize) -> u128 {
     let cf = period(n);
     let len = cf.period_len();
     let index = if len % 2 == 0 { len - 1 } else { 2 * len - 1 };
     let (a, _) = cf.convergent(index);
-    from_digits_le(&a)
+    a.to_u128()
 }
 
 fn main() {
