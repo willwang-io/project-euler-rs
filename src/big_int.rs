@@ -1,7 +1,33 @@
-use std::ops::{Add, Mul};
+use std::cmp::Ordering;
+use std::fmt::{Display, Formatter};
+use std::ops::{Add, Div, Mul, Rem, Sub};
 
+#[derive(PartialEq, Eq, Debug)]
 pub struct BigInt {
     digits: Vec<u8>,
+}
+
+impl Ord for BigInt {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.digit_count()
+            .cmp(&other.digit_count())
+            .then_with(|| self.digits.iter().rev().cmp(other.digits.iter().rev()))
+    }
+}
+
+impl PartialOrd for BigInt {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
+impl Display for BigInt {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        for d in self.digits().iter().rev() {
+            write!(f, "{d}")?;
+        }
+        Ok(())
+    }
 }
 
 impl BigInt {
@@ -34,6 +60,32 @@ impl BigInt {
             .rev()
             .fold(0, |acc, &digit| acc * 10 + u128::from(digit))
     }
+
+    pub fn div_rem(&self, rhs: &Self) -> (Self, Self) {
+        assert_ne!(rhs.digits, [0], "division by zero");
+
+        let mut quotient = vec![0; self.digit_count()];
+        let mut rem = Self::new(0);
+
+        for (i, &d) in self.digits.iter().enumerate().rev() {
+            if rem.digits == [0] {
+                rem.digits[0] = d;
+            } else {
+                rem.digits.insert(0, d);
+            }
+            while &rem >= rhs {
+                rem = rem - rhs;
+                quotient[i] += 1;
+            }
+        }
+
+        (
+            Self {
+                digits: normalize(quotient),
+            },
+            rem,
+        )
+    }
 }
 
 impl Add<&BigInt> for &BigInt {
@@ -63,30 +115,6 @@ impl Add<&BigInt> for &BigInt {
     }
 }
 
-impl Add<BigInt> for BigInt {
-    type Output = BigInt;
-
-    fn add(self, rhs: BigInt) -> BigInt {
-        &self + &rhs
-    }
-}
-
-impl Add<BigInt> for &BigInt {
-    type Output = BigInt;
-
-    fn add(self, rhs: BigInt) -> BigInt {
-        self + &rhs
-    }
-}
-
-impl Add<&BigInt> for BigInt {
-    type Output = BigInt;
-
-    fn add(self, rhs: &BigInt) -> BigInt {
-        &self + rhs
-    }
-}
-
 impl Mul<&BigInt> for &BigInt {
     type Output = BigInt;
 
@@ -110,27 +138,47 @@ impl Mul<&BigInt> for &BigInt {
         }
     }
 }
-impl Mul<BigInt> for BigInt {
+
+impl Sub<&BigInt> for &BigInt {
     type Output = BigInt;
 
-    fn mul(self, rhs: BigInt) -> BigInt {
-        &self * &rhs
+    fn sub(self, rhs: &BigInt) -> BigInt {
+        assert!(self >= rhs, "subtraction requires a >= b");
+
+        let mut ans = Vec::with_capacity(self.digit_count());
+        let mut borrow = 0;
+
+        for (i, &x) in self.digits().iter().enumerate() {
+            let y = rhs.digits().get(i).copied().unwrap_or(0) + borrow;
+
+            if x >= y {
+                ans.push(x - y);
+                borrow = 0;
+            } else {
+                ans.push(x + 10 - y);
+                borrow = 1;
+            }
+        }
+
+        BigInt {
+            digits: normalize(ans),
+        }
     }
 }
 
-impl Mul<BigInt> for &BigInt {
+impl Div<&BigInt> for &BigInt {
     type Output = BigInt;
 
-    fn mul(self, rhs: BigInt) -> BigInt {
-        self * &rhs
+    fn div(self, rhs: &BigInt) -> BigInt {
+        self.div_rem(rhs).0
     }
 }
 
-impl Mul<&BigInt> for BigInt {
+impl Rem<&BigInt> for &BigInt {
     type Output = BigInt;
 
-    fn mul(self, rhs: &BigInt) -> BigInt {
-        &self * rhs
+    fn rem(self, rhs: &BigInt) -> BigInt {
+        self.div_rem(rhs).1
     }
 }
 
@@ -143,3 +191,37 @@ fn normalize(mut d: Vec<u8>) -> Vec<u8> {
     }
     d
 }
+
+macro_rules! impl_owned_binop {
+      ($trait:ident, $method:ident, $op:tt) => {
+          impl std::ops::$trait<BigInt> for BigInt {
+              type Output = BigInt;
+
+              fn $method(self, rhs: BigInt) -> BigInt {
+                  &self $op &rhs
+              }
+          }
+
+          impl std::ops::$trait<BigInt> for &BigInt {
+              type Output = BigInt;
+
+              fn $method(self, rhs: BigInt) -> BigInt {
+                  self $op &rhs
+              }
+          }
+
+          impl std::ops::$trait<&BigInt> for BigInt {
+              type Output = BigInt;
+
+              fn $method(self, rhs: &BigInt) -> BigInt {
+                  &self $op rhs
+              }
+          }
+      };
+  }
+
+impl_owned_binop!(Add, add, +);
+impl_owned_binop!(Sub, sub, -);
+impl_owned_binop!(Mul, mul, *);
+impl_owned_binop!(Div, div, /);
+impl_owned_binop!(Rem, rem, %);
