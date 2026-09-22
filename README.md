@@ -7,8 +7,11 @@ cargo build --release --bin [BIN]
 hyperfine --warmup 10 --runs 100 --shell=none ./target/release/[BIN]
 ```
 
-| Problem                                                                             |      Benchmark      |                                  Notes                                   |                                    Code                                     |
+A blank "Remarks" field usually implies a straightforward implementation.
+
+| Problem                                                                             |      Benchmark      |                                 Remarks                                  |                                    Code                                     |
 |:------------------------------------------------------------------------------------|:-------------------:|:------------------------------------------------------------------------:|:---------------------------------------------------------------------------:|
+| [92. Square Digit Chains](https://projecteuler.net/problem=92)                      | 299.3 ms ± 36.7 ms  |                                                                          | [p0092.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0092.rs) |
 | [91. Right Triangles with Integer Coordinates](https://projecteuler.net/problem=91) |  45.0 ms ± 0.7 ms   |                               Brute-force                                | [p0091.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0091.rs) |
 | [90. Cube Digit Pairs](https://projecteuler.net/problem=90)                         |   9.9 ms ± 0.3 ms   |                               Brute-force                                | [p0090.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0090.rs) |
 | [89. Roman Numerals](https://projecteuler.net/problem=89)                           |   2.4 ms ± 0.2 ms   |                                                                          | [p0089.rs](https://github.com/willwang-io/pe-rs/blob/main/src/bin/p0089.rs) |
