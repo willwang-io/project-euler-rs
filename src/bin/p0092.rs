@@ -13,6 +13,7 @@ fn check_chain(mut n: usize) -> bool {
     }
     n == 89
 }
+
 fn main() {
     let mut ans = 0;
     for i in 1..10_000_000 {
