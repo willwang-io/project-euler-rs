@@ -1,0 +1,11 @@
+use pe_rs::number_theory::continued_fractions::period;
+
+pub fn run() {
+    let mut ans = 0;
+    for n in 0..=10_000 {
+        if period(n).period_len() % 2 == 1 {
+            ans += 1;
+        }
+    }
+    println!("{ans}");
+}
