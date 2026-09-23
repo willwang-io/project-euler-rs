@@ -1,8 +1,8 @@
 use pe_rs::big_int::BigInt;
 
 fn main() {
-    let mut a = BigInt::new(1);
-    let mut b = BigInt::new(2);
+    let mut a = BigInt::from(1);
+    let mut b = BigInt::from(2);
     let mut ans = 0;
 
     for _ in 1..1000 {

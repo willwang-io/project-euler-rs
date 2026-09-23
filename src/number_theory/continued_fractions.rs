@@ -35,21 +35,21 @@ impl PeriodicCF {
     /// Return the zero-based `idx`th convergent as (numerator, denominator)
     pub fn convergent(&self, idx: usize) -> (BigInt, BigInt) {
         if idx == 0 || self.period.is_empty() {
-            return (BigInt::new(self.integer_part), BigInt::new(1));
+            return (BigInt::from(self.integer_part), BigInt::from(1));
         }
 
         let last = self.period[(idx - 1) % self.period_len()];
-        let mut num = BigInt::new(last);
-        let mut den = BigInt::new(1);
+        let mut num = BigInt::from(last);
+        let mut den = BigInt::from(1);
 
         for i in (0..idx - 1).rev() {
-            let a = BigInt::new(self.period[i % self.period_len()]);
+            let a = BigInt::from(self.period[i % self.period_len()]);
             let new_num = a * &num + &den;
             den = num;
             num = new_num;
         }
 
-        let a = BigInt::new(self.integer_part);
+        let a = BigInt::from(self.integer_part);
         let new_num = a * &num + &den;
         (new_num, num)
     }

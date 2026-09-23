@@ -1,38 +1,81 @@
 use pe_rs::big_int::BigInt;
 
-#[test]
-fn construction() {
-    let zero = BigInt::new(0);
-    assert_eq!(zero.digits(), &[0]);
-    assert_eq!(zero.to_string(), "0");
+mod construction {
+    use pe_rs::big_int::BigInt;
 
-    let n = BigInt::new(123);
-    assert_eq!(n.digits(), &[3, 2, 1]);
-    assert_eq!(n.digit_count(), 3);
-    assert_eq!(n.digits_sum(), 6);
-    assert_eq!(n.to_u128(), 123);
-    assert_eq!(n.to_string(), "123");
+    #[test]
+    fn from_valid_str() {
+        let cases = [
+            ("123", &vec![3, 2, 1]),
+            ("0", &vec![0]),
+            ("000", &vec![0]),
+            ("00123", &vec![3, 2, 1]),
+            (
+                "123456789012345678901234567890",
+                &vec![
+                    0, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 9, 8, 7, 6, 5,
+                    4, 3, 2, 1,
+                ],
+            ),
+        ];
+
+        for (s, expect_digit) in cases {
+            assert_eq!(BigInt::from(s).digits(), expect_digit);
+        }
+    }
+
+    #[test]
+    fn from_invalid_str() {
+        let invalid_cases = [
+            "", "-123", "+123", "1.23", "12a3", " 123", "123 ", "1 23", "1 2 3",
+        ];
+        for s in invalid_cases {
+            assert!(
+                std::panic::catch_unwind(|| BigInt::from(s)).is_err(),
+                "expected a panic for input {s:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn from_valid_num() {
+        let cases = [(0, "0"), (1, "1"), (123, "123"), (i32::MAX, "2147483647")];
+
+        for (n, expected) in cases {
+            assert_eq!(BigInt::from(n).to_string(), expected);
+        }
+    }
+
+    #[test]
+    fn from_invalid_num() {
+        for n in [-1, -123, i32::MIN] {
+            assert!(
+                std::panic::catch_unwind(|| BigInt::from(n)).is_err(),
+                "expected a panic for {n}"
+            );
+        }
+    }
 }
 
 #[test]
 fn addition() {
-    let sum = BigInt::new(999) + BigInt::new(1);
+    let sum = BigInt::from(999) + BigInt::from(1);
     assert_eq!(sum.to_string(), "1000");
 }
 
 #[test]
 fn multiplication() {
-    let n = BigInt::new(99);
+    let n = BigInt::from(99);
     assert_eq!((&n * &n).to_string(), "9801");
-    assert_eq!((&n * BigInt::new(0)).to_string(), "0");
+    assert_eq!((&n * BigInt::from(0)).to_string(), "0");
 }
 
 mod comparison {
     use super::*;
 
     fn pow2(exp: usize) -> BigInt {
-        let mut n = BigInt::new(1);
-        let two = BigInt::new(2);
+        let mut n = BigInt::from(1);
+        let two = BigInt::from(2);
         for _ in 0..exp {
             n = n * &two;
         }
@@ -41,11 +84,11 @@ mod comparison {
 
     #[test]
     fn basic() {
-        assert_eq!(BigInt::new(1), BigInt::new(1));
+        assert_eq!(BigInt::from(1), BigInt::from(1));
 
         for (smaller, larger) in [(1, 2), (9, 10), (19, 20), (109, 110)] {
-            let a = BigInt::new(smaller);
-            let b = BigInt::new(larger);
+            let a = BigInt::from(smaller);
+            let b = BigInt::from(larger);
 
             assert!(a < b);
             assert!(b > a);
@@ -83,7 +126,7 @@ mod subtraction {
         ];
 
         for (a, b, res) in cases {
-            assert_eq!(BigInt::new(a) - BigInt::new(b), BigInt::new(res));
+            assert_eq!(BigInt::from(a) - BigInt::from(b), BigInt::from(res));
         }
     }
 }
@@ -116,9 +159,9 @@ mod div_rem {
         ];
 
         for (dividend, divisor, quotient, remainder) in cases {
-            let (q, r) = BigInt::new(dividend).div_rem(&BigInt::new(divisor));
-            assert_eq!(q, BigInt::new(quotient));
-            assert_eq!(r, BigInt::new(remainder));
+            let (q, r) = BigInt::from(dividend).div_rem(&BigInt::from(divisor));
+            assert_eq!(q, BigInt::from(quotient));
+            assert_eq!(r, BigInt::from(remainder));
         }
     }
 }

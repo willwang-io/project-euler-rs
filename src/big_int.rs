@@ -7,6 +7,38 @@ pub struct BigInt {
     digits: Vec<u8>,
 }
 
+impl From<&str> for BigInt {
+    fn from(s: &str) -> Self {
+        assert!(
+            !s.is_empty() && s.bytes().all(|b| b.is_ascii_digit()),
+            "expected a nonempty string of decimal digits"
+        );
+        Self {
+            digits: normalize(s.bytes().rev().map(|b| b - b'0').collect()),
+        }
+    }
+}
+
+impl From<usize> for BigInt {
+    fn from(mut n: usize) -> Self {
+        let mut digits = vec![];
+        while n > 0 {
+            digits.push((n % 10) as u8);
+            n /= 10;
+        }
+        Self {
+            digits: normalize(digits),
+        }
+    }
+}
+
+impl From<i32> for BigInt {
+    fn from(n: i32) -> Self {
+        let n = usize::try_from(n).expect("BigInt requires a nonnegative integer");
+        Self::from(n)
+    }
+}
+
 impl Ord for BigInt {
     fn cmp(&self, other: &Self) -> Ordering {
         self.digit_count()
@@ -31,17 +63,6 @@ impl Display for BigInt {
 }
 
 impl BigInt {
-    pub fn new(mut n: usize) -> Self {
-        let mut digits = vec![];
-        while n > 0 {
-            digits.push((n % 10) as u8);
-            n /= 10;
-        }
-        Self {
-            digits: normalize(digits),
-        }
-    }
-
     pub fn digit_count(&self) -> usize {
         self.digits.len()
     }
@@ -65,7 +86,7 @@ impl BigInt {
         assert_ne!(rhs.digits, [0], "division by zero");
 
         let mut quotient = vec![0; self.digit_count()];
-        let mut rem = Self::new(0);
+        let mut rem = Self::from(0);
 
         for (i, &d) in self.digits.iter().enumerate().rev() {
             if rem.digits == [0] {
