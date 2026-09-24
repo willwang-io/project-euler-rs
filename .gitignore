@@ -2,4 +2,4 @@
 .vscode/
 
 /target
-/input
+/inputsrc/main.rs
