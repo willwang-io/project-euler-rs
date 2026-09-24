@@ -9,4 +9,4 @@ macro_rules! run_problem {
     };
 }
 
-run_problem!("problems/0001-0100/p0100.rs");
+run_problem!("problems/0101-0200/p0104.rs");
