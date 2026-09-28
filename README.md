@@ -1,16 +1,18 @@
 # Project Euler with Rust
 
-Benchmarked with:
+- Benchmarked with:
 
 ```shell
 cargo build --release --bin [BIN]
 hyperfine --warmup 10 --runs 100 --shell=none ./target/release/[BIN]
 ```
 
-A blank "Remarks" field usually implies a straightforward implementation.
+- A blank "Remarks" field usually implies a straightforward implementation.
+- :bulb: marks a few extra notes in the source code comments. 
 
 | Problem                                                                             |      Benchmark      |                                  Remarks                                  |                                            Code                                            |
 |:------------------------------------------------------------------------------------|:-------------------:|:-------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------:|
+| [126. Cuboid Layers](https://projecteuler.net/problem=126)                          |  10.1 ms ± 0.3 ms   |                                  :bulb:                                   | [p0126.rs](https://github.com/willwang-io/pe-rs/blob/main/src/problems/0101-0200/p0126.rs) |
 | [125. Palindromic Sums](https://projecteuler.net/problem=125)                       |  28.1 ms ± 0.4 ms   |                                Prefix Sum                                 | [p0125.rs](https://github.com/willwang-io/pe-rs/blob/main/src/problems/0101-0200/p0125.rs) |
 | [124. Ordered Radicals](https://projecteuler.net/problem=124)                       |  34.8 ms ± 0.5 ms   |                                                                           | [p0124.rs](https://github.com/willwang-io/pe-rs/blob/main/src/problems/0101-0200/p0124.rs) |
 | [123. Prime Square Remainders](https://projecteuler.net/problem=123)                |   5.6 ms ± 0.2 ms   |                                                                           | [p0123.rs](https://github.com/willwang-io/pe-rs/blob/main/src/problems/0101-0200/p0123.rs) |
