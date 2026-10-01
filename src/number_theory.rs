@@ -14,6 +14,19 @@ pub fn gcd(mut a: u64, mut b: u64) -> u64 {
     a
 }
 
+pub fn multiplicative_order(a: u64, n: u64) -> u64 {
+    assert_eq!(gcd(a, n), 1, "GCD of {a} and {n} must be 1");
+
+    let mut m = euler_totient(n);
+    for (p, _) in prime_factors(m) {
+        while m % p == 0 && mod_pow(a, m / p, n) == 1 {
+            m /= p;
+        }
+    }
+
+    m
+}
+
 pub fn gaussian_gcd(mut a: GaussianInt, mut b: GaussianInt) -> GaussianInt {
     while b.norm() != 0 {
         let t = b;
