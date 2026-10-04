@@ -5,6 +5,8 @@ pub mod linear_algebra;
 pub mod number_theory;
 pub mod utility;
 
+pub const MOD: i64 = 1_000_000_007;
+
 pub fn fetch_input(filename: &str) -> io::Result<String> {
     let path = Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("input")

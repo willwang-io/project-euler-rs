@@ -1,3 +1,6 @@
+use crate::MOD;
+use crate::number_theory::mod_pow;
+
 pub fn mat_mul(a: &[Vec<u64>], b: &[Vec<u64>], modules: u64) -> Vec<Vec<u64>> {
     let n = a.len();
     let k = b.len();
@@ -74,4 +77,69 @@ pub fn gaussian_elimination(mut matrix: Vec<Vec<f64>>) -> Option<Vec<f64>> {
         sol[row] = (rhs - sum) / matrix[row][row];
     }
     Some(sol)
+}
+
+pub fn berlekamp_massey(a: &[i64]) -> Vec<i64> {
+    let a: Vec<_> = a.iter().map(|&value| value.rem_euclid(MOD)).collect();
+    let (mut c, mut b) = (vec![1], vec![1]);
+    let (mut l, mut m, mut last) = (0, 1, 1);
+
+    for n in 0..a.len() {
+        let mut d = a[n];
+        for j in 1..=l {
+            d = (d + c[j] * a[n - j]) % MOD;
+        }
+        if d == 0 {
+            m += 1;
+            continue;
+        }
+
+        let old = c.clone();
+        let k = d * mod_pow(last as u64, (MOD - 2) as u64, MOD as u64) as i64 % MOD;
+        c.resize(c.len().max(b.len() + m), 0);
+        for j in 0..b.len() {
+            c[j + m] = (c[j + m] - k * b[j] % MOD + MOD) % MOD;
+        }
+
+        if 2 * l <= n {
+            l = n + 1 - l;
+            b = old;
+            last = d;
+            m = 1;
+        } else {
+            m += 1;
+        }
+    }
+
+    c[1..=l].iter().map(|&x| (MOD - x) % MOD).collect()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::berlekamp_massey;
+    use crate::MOD;
+
+    #[test]
+    fn berlekamp_massey_normalizes_inputs() {
+        assert_eq!(berlekamp_massey(&[-1, -1, -1]), vec![1]);
+        assert_eq!(berlekamp_massey(&[MOD, MOD]), vec![]);
+    }
+
+    #[test]
+    fn berlekamp_massey_recovers_recurrences() {
+        assert_eq!(berlekamp_massey(&[0, 1, 1, 2, 3, 5]), vec![1, 1]);
+        assert_eq!(berlekamp_massey(&[0, 1, 2, 7, 20, 61]), vec![2, 3]);
+    }
+
+    #[test]
+    fn berlekamp_massey_handles_zero_prefix() {
+        assert_eq!(berlekamp_massey(&[]), vec![]);
+        assert_eq!(berlekamp_massey(&[0, 0, 0]), vec![]);
+        assert_eq!(berlekamp_massey(&[0, 0, 1]), vec![0, 0, 1]);
+    }
+
+    #[test]
+    fn berlekamp_massey_wraps_modulus() {
+        assert_eq!(berlekamp_massey(&[1, MOD - 1, 1, MOD - 1]), vec![MOD - 1]);
+    }
 }
