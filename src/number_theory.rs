@@ -7,14 +7,14 @@ pub fn factorial(n: u64) -> u64 {
     (1..=n).product()
 }
 
-pub fn gcd(mut a: u64, mut b: u64) -> u64 {
+pub fn gcd(mut a: i64, mut b: i64) -> i64 {
     while b != 0 {
         (a, b) = (b, a % b);
     }
     a
 }
 
-pub fn multiplicative_order(a: u64, n: u64) -> u64 {
+pub fn multiplicative_order(a: i64, n: i64) -> i64 {
     assert_eq!(gcd(a, n), 1, "GCD of {a} and {n} must be 1");
 
     let mut m = euler_totient(n);
@@ -53,11 +53,11 @@ pub fn sig(n: u64) -> u64 {
     total
 }
 
-pub fn lcm(a: u64, b: u64) -> u64 {
+pub fn lcm(a: i64, b: i64) -> i64 {
     a * b / gcd(a, b)
 }
 
-pub fn mod_pow(mut base: u64, mut exp: u64, modules: u64) -> u64 {
+pub fn mod_pow(mut base: i64, mut exp: i64, modules: i64) -> i64 {
     let mut ans = 1;
     base %= modules;
 
@@ -107,10 +107,10 @@ pub fn smallest_prime_factor(limit: usize) -> Vec<usize> {
     spf
 }
 
-pub fn is_prime(n: u64) -> bool {
+pub fn is_prime(n: i64) -> bool {
     if n == 2 || n == 3 {
         true
-    } else if n < 2 || n.is_multiple_of(2) {
+    } else if n < 2 || n % 2 == 0 {
         false
     } else {
         let s = (n - 1).trailing_zeros();
@@ -138,7 +138,7 @@ pub fn is_prime(n: u64) -> bool {
     }
 }
 
-pub fn prime_factors(mut n: u64) -> Vec<(u64, u32)> {
+pub fn prime_factors(mut n: i64) -> Vec<(i64, u32)> {
     if n == 0 || n == 1 {
         vec![]
     } else {
@@ -168,7 +168,7 @@ pub fn divisors(n: u64) -> Vec<u64> {
     d
 }
 
-pub fn euler_totient(mut n: u64) -> u64 {
+pub fn euler_totient(mut n: i64) -> i64 {
     let mut result = n;
     let mut p = 2;
 
@@ -232,7 +232,7 @@ impl GaussianInt {
 // ------------------
 // Helpers Methods
 // ------------------
-fn factor_recursive(n: u64, factors: &mut BTreeMap<u64, u32>) {
+fn factor_recursive(n: i64, factors: &mut BTreeMap<i64, u32>) {
     if n == 1 {
         return;
     }
@@ -250,10 +250,10 @@ fn factor_recursive(n: u64, factors: &mut BTreeMap<u64, u32>) {
     }
 }
 
-fn trial_division_map(mut n: u64, factors: &mut BTreeMap<u64, u32>) {
+fn trial_division_map(mut n: i64, factors: &mut BTreeMap<i64, u32>) {
     let mut d = 3;
     while d * d <= n {
-        while n.is_multiple_of(d) {
+        while n % d == 0 {
             *factors.entry(d).or_insert(0) += 1;
             n /= d;
         }
@@ -264,8 +264,8 @@ fn trial_division_map(mut n: u64, factors: &mut BTreeMap<u64, u32>) {
     }
 }
 
-fn pollard_rho(n: u64) -> u64 {
-    if n.is_multiple_of(2) {
+fn pollard_rho(n: i64) -> i64 {
+    if n % 2 == 0 {
         return 2;
     }
     let mut c = 1;
@@ -278,21 +278,21 @@ fn pollard_rho(n: u64) -> u64 {
     }
 }
 
-fn pollard_rho_inner(n: u64, c: u64) -> u64 {
+fn pollard_rho_inner(n: i64, c: i64) -> i64 {
     let mut x = 2;
     let mut y = 2;
     let mut d = 1;
-    let f = |x: u64| ((x as u128 * x as u128) % n as u128 + c as u128) as u64 % n;
+    let f = |x: i64| ((x as u128 * x as u128) % n as u128 + c as u128) as i64 % n;
     while d == 1 {
         x = f(x);
         y = f(f(y));
         let diff = x.abs_diff(y);
-        d = gcd(diff, n);
+        d = gcd(diff as i64, n);
     }
     d
 }
 
 #[inline]
-fn mod_mul(a: u64, b: u64, m: u64) -> u64 {
-    ((a as u128 * b as u128) % m as u128) as u64
+fn mod_mul(a: i64, b: i64, m: i64) -> i64 {
+    ((a as u128 * b as u128) % m as u128) as i64
 }

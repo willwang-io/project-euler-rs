@@ -95,7 +95,7 @@ pub fn berlekamp_massey(a: &[i64]) -> Vec<i64> {
         }
 
         let old = c.clone();
-        let k = d * mod_pow(last as u64, (MOD - 2) as u64, MOD as u64) as i64 % MOD;
+        let k = d * mod_pow(last, MOD - 2, MOD) % MOD;
         c.resize(c.len().max(b.len() + m), 0);
         for j in 0..b.len() {
             c[j + m] = (c[j + m] - k * b[j] % MOD + MOD) % MOD;
