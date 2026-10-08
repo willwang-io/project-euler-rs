@@ -1,3 +1,5 @@
+pub mod vector;
+
 use crate::MOD;
 use crate::number_theory::mod_pow;
 
