@@ -16,3 +16,7 @@ pub fn next_permutation<T: Ord>(a: &mut [T]) -> bool {
 pub fn is_palindrome(s: &str) -> bool {
     s.chars().eq(s.chars().rev())
 }
+
+pub fn is_square(n: i64) -> bool {
+    n.isqrt() * n.isqrt() == n
+}
