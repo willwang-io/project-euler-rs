@@ -1,17 +1,28 @@
 pub mod continued_fractions;
 
 use std::collections::BTreeMap;
+use std::ops::{Div, Mul, Rem};
 
 #[inline]
 pub fn factorial(n: u64) -> u64 {
     (1..=n).product()
 }
 
-pub fn gcd(mut a: i64, mut b: i64) -> i64 {
-    while b != 0 {
+pub fn gcd<T>(mut a: T, mut b: T) -> T
+where
+    T: Copy + Default + PartialEq + Rem<Output = T>,
+{
+    while b != T::default() {
         (a, b) = (b, a % b);
     }
     a
+}
+
+pub fn lcm<T>(a: T, b: T) -> T
+where
+    T: Copy + Default + PartialEq + Rem<Output = T> + Div<Output = T> + Mul<Output = T>,
+{
+    (a / gcd(a, b)) * b
 }
 
 pub fn multiplicative_order(a: i64, n: i64) -> i64 {
@@ -51,10 +62,6 @@ pub fn sig(n: u64) -> u64 {
         }
     }
     total
-}
-
-pub fn lcm(a: i64, b: i64) -> i64 {
-    a * b / gcd(a, b)
 }
 
 pub fn mod_pow(mut base: i64, mut exp: i64, modules: i64) -> i64 {
