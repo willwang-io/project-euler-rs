@@ -1,6 +1,6 @@
 # Project Euler with Rust
 
-- Benchmarked with:
+Benchmarked with:
 
 ```shell
 cargo build --release --bin [BIN]
@@ -9,6 +9,7 @@ hyperfine --warmup 10 --runs 100 --shell=none ./target/release/[BIN]
 
 | Problem                                                                             |      Benchmark      |                                        Remarks                                         |                                            Code                                            |
 |:------------------------------------------------------------------------------------|:-------------------:|:--------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------:|
+| [154. Exploring Pascal's Pyramid](https://projecteuler.net/problem=154)             | 5350.1 ms ± 36.2 ms |                                       Prefix Sum                                       | [p0154.rs](https://github.com/willwang-io/pe-rs/blob/main/src/problems/0101-0200/p0154.rs) |
 | [153. Investigating Gaussian Integers](https://projecteuler.net/problem=153)        | 1457.7 ms ± 10.8 ms |                                                                                        | [p0153.rs](https://github.com/willwang-io/pe-rs/blob/main/src/problems/0101-0200/p0153.rs) |
 | [152. Sums of Square Reciprocals](https://projecteuler.net/problem=152)             |   7.6 ms ± 0.3 ms   |                                                                                        | [p0152.rs](https://github.com/willwang-io/pe-rs/blob/main/src/problems/0101-0200/p0152.rs) |
 | [151. A Preference for A5](https://projecteuler.net/problem=151)                    |   2.8 ms ± 0.3 ms   |                                                                                        | [p0151.rs](https://github.com/willwang-io/pe-rs/blob/main/src/problems/0101-0200/p0151.rs) |
