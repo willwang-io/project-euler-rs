@@ -160,10 +160,10 @@ pub fn prime_factors(mut n: i64) -> Vec<(i64, u32)> {
     }
 }
 
-pub fn divisors(n: u64) -> Vec<u64> {
+pub fn divisors(n: i64) -> Vec<i64> {
     let mut d = vec![];
     for x in 1..=n.isqrt() {
-        if n.is_multiple_of(x) {
+        if n % x == 0 {
             let y = n / x;
             d.push(x);
             if x != y {
