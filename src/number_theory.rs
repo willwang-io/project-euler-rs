@@ -8,6 +8,20 @@ pub fn factorial(n: u64) -> u64 {
     (1..=n).product()
 }
 
+pub fn legendre(mut m: i64, p: i64) -> i64 {
+
+    assert!(m >= 0 && p >= 2);
+
+    let mut ans = 0;
+
+    while m >= p {
+        m /= p;
+        ans += m;
+    }
+
+    ans
+}
+
 pub fn gcd<T>(mut a: T, mut b: T) -> T
 where
     T: Copy + Default + PartialEq + Rem<Output = T>,
